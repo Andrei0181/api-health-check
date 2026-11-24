@@ -1,70 +1,53 @@
-# api-health-check
-Simple Python script for API health checks, latency measurement and error handling
-Updated README# API Health Check
+# API Health Check
 
-A Python script to check the health of APIs by measuring their response time (latency), handling errors, and reporting the status. 
+A lightweight Python utility for checking API availability, measuring response latency, and reporting common request failures.
 
-## Features
-- Checks API health with status code and latency
-- Handles different types of errors like timeouts, connection issues, etc.
-- Supports retry logic for timeouts
-- Shows rate limit information (if available)
+## Current capabilities
+
+- Sends an HTTP GET request to a configurable API endpoint.
+- Reports HTTP status and request latency.
+- Handles request timeouts and connection errors.
+- Retries timeout failures.
+- Displays rate-limit information when the API provides it.
 
 ## Requirements
-- Python 3.6+
-- `requests` library
 
-## Installation
+- Python 3.8+
+- `requests`
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/berestov0181/api-health-check.git
-pip install requests
+## Quick start
+
+```bash
+git clone https://github.com/Andrei0181/api-health-check.git
+cd api-health-check
+python3 -m pip install requests
 python3 check_api_health.py
+```
 
+## Configuration
 
----
+Edit `API_URL` and `TIMEOUT` in `check_api_health.py` to select the endpoint and request timeout.
 
-### 2. **Заливка кода в репозиторий**
+The current repository contains a basic single-endpoint checker. It is a prototype utility, not a production monitoring platform: it does not currently provide scheduled checks, persistent history, dashboards, or alert delivery.
 
-1. Создаём файл с кодом. В репозитории на GitHub, в каталоге репозитория создаем новый файл:
+## Example output
 
-```plaintext
-check_api_health.py
-import requests
-import time
+```text
+API Health Check Result:
+status: OK
+latency: 0.245
+rate_limit: 4999
+```
 
-API_URL = "https://api.github.com"
-TIMEOUT = 10
+Actual values depend on the endpoint and response.
 
+## Roadmap
 
-def check_api_health():
-    start = time.time()
-    try:
-        response = requests.get(API_URL, timeout=TIMEOUT)
-        latency = time.time() - start
+- Support checking multiple endpoints from configuration.
+- Add structured JSON output and exit codes for automation.
+- Add optional periodic checks and result history.
+- Add alert integrations.
 
-        if response.status_code == 200:
-            return {
-                "status": "OK",
-                "latency": round(latency, 3),
-                "rate_limit": response.headers.get("X-RateLimit-Remaining")
-            }
-        else:
-            return {
-                "status": f"HTTP_{response.status_code}",
-                "latency": round(latency, 3)
-            }
+## License
 
-    except requests.exceptions.Timeout:
-        return {"status": "TIMEOUT"}
-    except Exception as e:
-        return {"status": "ERROR", "error": str(e)}
-
-
-if __name__ == "__main__":
-    result = check_api_health()
-    print("API Health Check Result:")
-    for k, v in result.items():
-        print(f"{k}: {v}")
-
+No license has been specified yet. All rights remain with the author unless a license is added.
