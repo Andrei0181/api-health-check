@@ -1,5 +1,8 @@
 # API Health Check
 
+
+> Part of the **BERESTOV Web3 Tools** portfolio. See the [Portfolio Overview](https://github.com/Andrei0181/binance-mcp-agent/blob/main/PORTFOLIO_OVERVIEW.md) for the wider project catalogue and ecosystem context.
+
 A lightweight Python utility for checking API availability, measuring response latency, and reporting common request failures.
 
 ## Current capabilities
